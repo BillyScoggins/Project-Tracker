@@ -13,10 +13,10 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
 
-  $(".saveBtn").click(function () {
+  // $(".saveBtn").click(function () {
 
-    console.log($(this).parent())
-  });
+  //   console.log($(this).parent())
+  // });
   //
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -55,14 +55,15 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page    
-
-function highliter() {
-  var hour = dayjs().hour();
-  console.log(hour)
-
+  var hour;
+  function highliter() {
+    hour = dayjs().hour();
+    console.log(hour)
+  }
 
 
   $(".time-block").each(function () {
+    hour = dayjs().hour();
     var current = parseInt($(this).attr('id').split('-')[1]);
 
     if (current > hour) {
@@ -77,8 +78,27 @@ function highliter() {
 
     }
   });
-}
-highliter()
-
-
+  highliter(); 
 });
+
+for (var i = 9; i <= 18; i++) {
+  var savedAppointment = localStorage.getItem("appointment" + (i));
+  if (savedAppointment !== null); {
+    $("#"+(i)).text(savedAppointment);
+
+  }
+
+}
+
+$(".saveBtn").click(function () {
+  console.log($(this).siblings("description").val())
+  // var saved = $(this).attr("dataBtn");
+  var saved = $(this).siblings(".description").val();
+  var savedKey = $(this).parent().attr("id");
+  //var text = $("#" + saved).val();
+  localStorage.setItem(savedKey, saved)
+
+})
+
+$("#hour-14 .description").val(localStorage.getItem("hour-14"));
+
